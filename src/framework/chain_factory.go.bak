@@ -1,0 +1,33 @@
+package framework
+
+var (
+	chainFactorySingleton ChainFactory
+)
+
+type ChainFactory struct {
+	chainMap map[string]Chain
+}
+
+func init() {
+	chainFactorySingleton = ChainFactory{}
+}
+
+func (this *ChainFactory) getChain(name string) Chain {
+	val, exists := this.processorMap[name]
+	if exists {
+		return val
+	}
+	return nil
+}
+
+func (this *ChainFactory) registerChain(name string, chain Chain) {
+	this.processorMap[name] = chain
+}
+
+func GetChain(name string) Chain {
+	return processorFactorySingleton.getChain(name)
+}
+
+func RegisterChain(name string, chain Chain) {
+	chainFactorySingleton.registerChain(name, chain)
+}
